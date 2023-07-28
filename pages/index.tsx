@@ -4,19 +4,30 @@ import utilStyles from '../styles/utils.module.css';
 import { getSortedPostsData } from '../lib/posts';
 import Link from 'next/link';
 import Date from '../components/date';
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData();
-  return {
-    props: {
-      allPostsData,
-    },
-  };
-}
+import { GetStaticProps } from 'next'
 
-export default function Home({ allPostsData }) {
+
+
+
+export default function Home({ allPostsData }: { allPostsData:{
+  date: string
+  title: string
+  id: string
+}[]
+}) {
   return (
     <Layout home>
-      {/* Keep the existing code here */}
+      {/* Keep the existing code here */}<Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <section className={utilStyles.headingMd}>
+        <p>web developer</p>
+        
+        <p>
+          {'I´m a web developer and i love to learn .'}
+          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.
+        </p>
+        </section>
 
       {/* Add this <section> tag below the existing <section> tag */}
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
@@ -36,4 +47,12 @@ export default function Home({ allPostsData }) {
       </section>
     </Layout>
   );
+}
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
 }
